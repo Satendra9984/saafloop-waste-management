@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SaafLoop — India's Community Circular Waste Platform</title>
+<meta name="description" content="SaafLoop connects housing societies, composters, farmers and municipalities into a single transparent circular economy — compliance, livelihoods and clean cities without waiting for government will."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Tokens ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f9f5;
+  --bg-2:#eef2ec;
+  --bg-3:#e4ece0;
+  --surface:rgba(255,255,255,0.82);
+  --border:rgba(0,0,0,0.09);
+  --border-bright:rgba(0,0,0,0.15);
+  --green:#1e9e6c;
+  --green-dim:rgba(30,158,108,0.12);
+  --green-glow:rgba(30,158,108,0.18);
+  --amber:#b87800;
+  --amber-dim:rgba(184,120,0,0.12);
+  --text:#111a14;
+  --muted:#5a6b60;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --r-xl:24px;
+  --r-lg:16px;
+  --r-md:12px;
+  --shadow:0 20px 60px rgba(0,0,0,0.1);
+  --shadow-sm:0 8px 28px rgba(0,0,0,0.08);
+  --glow:0 0 56px rgba(30,158,108,0.15);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:radial-gradient(circle at top center,#e8f2e4 0%,#f5faf4 52%);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+/* grain overlay */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  z-index:9999;opacity:.25;mix-blend-mode:soft-light;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ── Nav ─────────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.85rem 2rem;
+  background:rgba(247,249,245,0.92);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 4px 32px rgba(0,0,0,0.1)}
+.nav-logo{
+  font-family:var(--serif);
+  font-size:1.3rem;font-weight:900;
+  letter-spacing:-.02em;
+  color:var(--text);
+}
+.nav-logo span{color:var(--green)}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{font-size:.875rem;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--green)!important;color:#fff!important;
+  padding:.48rem 1.15rem;border-radius:100px;
+  font-weight:700!important;font-size:.84rem!important;
+  transition:filter .2s,transform .15s!important;
+}
+.nav-cta:hover{filter:brightness(1.06)!important;transform:translateY(-1px)!important}
+.menu-btn{
+  display:none;background:transparent;border:1px solid var(--border-bright);
+  border-radius:9px;padding:.42rem;cursor:pointer;
+}
+.menu-btn span{display:block;width:19px;height:2px;background:var(--muted);margin:3.5px 0;transition:.2s}
+
+/* ── Shared layout ───────────────────────────────────────────────── */
+.container{max-width:1120px;margin:0 auto;padding:0 1.5rem}
+section{padding:5.5rem 1.5rem}
+.section-label{
+  font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--green);margin-bottom:.7rem;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(1.9rem,3vw,2.8rem);
+  font-weight:900;line-height:1.12;letter-spacing:-.02em;
+  color:var(--text);
+}
+.section-title em{font-style:italic;color:var(--green)}
+.section-body{font-size:1rem;color:var(--muted);line-height:1.75;max-width:600px;margin-top:.9rem}
+
+/* btn system */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.82rem 1.7rem;border-radius:100px;
+  font-family:var(--sans);font-weight:700;font-size:.9rem;
+  cursor:pointer;border:none;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .2s;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,#28bf86,#1a8a5e);color:#fff;box-shadow:var(--glow)}
+.btn-primary:hover{filter:brightness(1.05);box-shadow:0 0 72px rgba(30,158,108,0.3)}
+.btn-amber{background:var(--amber);color:#fff;box-shadow:0 4px 24px rgba(184,120,0,.25)}
+.btn-amber:hover{box-shadow:0 8px 36px rgba(184,120,0,.35)}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border-bright)}
+.btn-outline:hover{border-color:rgba(0,0,0,.28);background:rgba(0,0,0,.04)}
+.btn-kofi{background:#ff5f5f;color:#fff;box-shadow:0 4px 24px rgba(255,95,95,.25)}
+.btn-kofi:hover{box-shadow:0 8px 32px rgba(255,95,95,.4)}
+
+/* glass card */
+.card{
+  border:1px solid var(--border);
+  border-radius:var(--r-xl);
+  background:var(--surface);
+  backdrop-filter:blur(20px);
+  box-shadow:var(--shadow-sm);
+  padding:1.6rem 1.5rem;
+}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.28}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.06);opacity:.9}}
+
+/* ── Hero ────────────────────────────────────────────────────────── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;padding:6.5rem 1.5rem 4rem;
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 25%,rgba(30,158,108,.14),transparent 65%),
+    radial-gradient(ellipse 50% 50% at 10% 80%,rgba(184,120,0,.09),transparent 60%);
+}
+.hero-circles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-circles span{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(30,158,108,.15);
+  animation:pulse 9s ease-in-out infinite;
+}
+.hero-circles span:nth-child(1){width:620px;height:620px;right:-180px;top:-180px}
+.hero-circles span:nth-child(2){width:400px;height:400px;right:-80px;top:-40px;animation-delay:1.2s}
+.hero-circles span:nth-child(3){width:220px;height:220px;left:4%;bottom:22%;animation-delay:2.4s}
+.hero-inner{
+  max-width:1120px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3.5rem;align-items:center;position:relative;z-index:2;width:100%;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--amber-dim);border:1px solid rgba(184,120,0,.28);
+  border-radius:100px;padding:.33rem .9rem;
+  font-size:.78rem;font-weight:600;color:#7a5000;
+  margin-bottom:1.4rem;
+  animation:fadeUp .55s ease both;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);animation:blink 2s ease-in-out infinite}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(2.6rem,4.8vw,4rem);
+  font-weight:900;line-height:1.06;letter-spacing:-.03em;
+  animation:fadeUp .65s .1s ease both;
+}
+.hero h1 em{
+  font-style:italic;color:var(--green);position:relative;
+}
+.hero h1 em::after{
+  content:'';position:absolute;left:0;bottom:-3px;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--amber));
+  border-radius:2px;
+}
+.hero-tagline{
+  font-family:var(--mono);font-size:.85rem;letter-spacing:.1em;
+  color:#1e5e40;margin:.9rem 0 .3rem;
+  animation:fadeUp .65s .18s ease both;
+}
+.hero-sub{
+  font-size:1rem;color:var(--muted);max-width:44rem;line-height:1.75;
+  animation:fadeUp .65s .25s ease both;
+}
+.hero-actions{
+  display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.8rem;
+  animation:fadeUp .65s .32s ease both;
+}
+.hero-trust{
+  display:flex;align-items:center;gap:.8rem;margin-top:1.4rem;
+  animation:fadeUp .65s .4s ease both;
+}
+.trust-avatars{display:flex}
+.trust-avatars span{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid rgba(30,158,108,.4);
+  background:var(--green-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;color:#1e5e40;
+  margin-left:-7px;
+}
+.trust-avatars span:first-child{margin-left:0}
+.trust-text{font-size:.78rem;color:var(--muted)}
+.trust-text strong{color:var(--text);font-weight:600}
+/* hero dashboard card */
+.hero-visual{animation:fadeUp .75s .18s ease both}
+.hero-card{
+  background:rgba(255,255,255,0.95);
+  border:1px solid rgba(30,158,108,.28);
+  border-radius:var(--r-xl);
+  box-shadow:var(--glow),var(--shadow);
+  overflow:hidden;
+}
+.hero-card-header{
+  background:linear-gradient(135deg,#1a3c2a,#265c38);
+  padding:1.3rem 1.4rem;display:flex;align-items:center;gap:.9rem;
+}
+.hero-card-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.hero-card-header h3{font-family:var(--serif);color:#fff;font-size:1.1rem}
+.hero-card-header p{color:rgba(255,255,255,.65);font-size:.8rem}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(30,158,108,.12)}
+.stat-cell{
+  background:rgba(247,252,249,0.97);
+  padding:1.1rem 1.3rem;position:relative;overflow:hidden;
+}
+.stat-cell::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.stat-cell:hover::before{opacity:1}
+.stat-big{
+  font-family:var(--serif);font-size:1.75rem;font-weight:900;
+  color:#1a4d32;line-height:1;
+}
+.stat-sm{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+.hero-card-footer{
+  padding:1.1rem 1.4rem;
+  border-top:1px solid rgba(30,158,108,.12);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.progress-wrap{flex:1;margin-right:1rem}
+.progress-meta{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-bottom:.35rem}
+.progress-bar{height:7px;background:rgba(30,158,108,.12);border-radius:100px;overflow:hidden}
+.progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--green),#28bf86);width:0%;transition:width 1.6s ease}
+.progress-badge{font-size:.8rem;font-weight:700;color:#1e5e40;white-space:nowrap}
+
+/* ── Stats strip ─────────────────────────────────────────────────── */
+.stats-strip{padding:0 1.5rem 3.5rem}
+.stats-grid{
+  max-width:1120px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;
+}
+.stat-pill{
+  border:1px solid var(--border);border-radius:var(--r-lg);
+  background:rgba(255,255,255,.92);padding:1.1rem 1rem;
+}
+.stat-pill-val{
+  font-family:var(--serif);font-size:2rem;font-weight:900;
+  font-variant-numeric:tabular-nums;color:#1a4d32;line-height:1;
+}
+.stat-pill-label{font-size:.78rem;color:var(--muted);margin-top:.22rem}
+
+/* ── Problem ─────────────────────────────────────────────────────── */
+.problem{
+  background:
+    radial-gradient(ellipse 70% 80% at 90% 50%,rgba(30,158,108,.09),transparent),
+    #eaf3e6;
+  position:relative;
+}
+.problem-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:2.8rem}
+.problem-card{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(0,0,0,.09);
+  border-radius:var(--r-lg);padding:1.7rem;
+  transition:background .3s,transform .3s;
+}
+.problem-card:hover{background:rgba(255,255,255,.96);transform:translateY(-4px)}
+.prob-icon{font-size:1.8rem;margin-bottom:.9rem}
+.prob-num{
+  font-family:var(--serif);font-size:2.2rem;font-weight:900;
+  color:var(--green);line-height:1;
+}
+.prob-unit{font-size:.9rem;font-weight:400;color:rgba(30,158,108,.8)}
+.prob-desc{font-size:.88rem;color:rgba(0,0,0,.55);margin-top:.5rem;line-height:1.65}
+.chain-wrap{margin-top:2.8rem}
+.chain-label{font-size:.82rem;color:rgba(30,158,108,.9);margin-bottom:.9rem;font-weight:500}
+.chain{display:flex;align-items:center;flex-wrap:wrap;gap:.45rem}
+.chain-node{
+  background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.12);
+  border-radius:8px;padding:.5rem .9rem;font-size:.83rem;color:var(--text);font-weight:500;
+}
+.chain-arrow{color:var(--amber);font-size:1.1rem;font-weight:700}
+.chain-node.broken{
+  border-color:rgba(239,68,68,.45);
+  background:rgba(239,68,68,.07);
+  color:rgba(170,0,0,.85);
+  position:relative;
+}
+.chain-node.broken::after{
+  content:'✗';position:absolute;top:-8px;right:-6px;
+  font-size:.65rem;background:#ef4444;color:#fff;
+  border-radius:50%;width:15px;height:15px;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── Solution ────────────────────────────────────────────────────── */
+.solution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:2.8rem}
+.solution-card{
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:1.8rem;
+  transition:box-shadow .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.solution-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--amber));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s ease;
+}
+.solution-card:hover{box-shadow:var(--glow);transform:translateY(-5px)}
+.solution-card:hover::after{transform:scaleX(1)}
+.sol-step{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--green);margin-bottom:.65rem}
+.sol-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--green-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:.9rem;
+}
+.solution-card h3{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:.45rem}
+.solution-card p{font-size:.9rem;color:var(--muted);line-height:1.65}
+
+/* ── How it works ────────────────────────────────────────────────── */
+.how{background:rgba(235,244,235,.97)}
+.how-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;margin-top:3rem;position:relative;
+}
+.how-steps::before{
+  content:'';
+  position:absolute;top:31px;left:8%;right:8%;height:2px;
+  background:linear-gradient(90deg,var(--green),var(--amber));
+  z-index:0;
+}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{
+  width:62px;height:62px;border-radius:50%;
+  background:#fff;border:2px solid var(--green);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;
+  font-family:var(--serif);font-size:1.3rem;font-weight:900;color:var(--green);
+  box-shadow:0 0 24px rgba(30,158,108,.15);
+  transition:background .3s,transform .3s;
+}
+.how-step:hover .how-num{background:var(--green);color:#fff;transform:scale(1.08)}
+.how-step h4{font-weight:700;font-size:.94rem;color:var(--text);margin-bottom:.3rem}
+.how-step p{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* ── Who it's for ────────────────────────────────────────────────── */
+.stakeholder-row{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  border:1px solid var(--border);border-radius:var(--r-lg);
+  background:rgba(255,255,255,.92);padding:1.3rem 1.2rem;margin-bottom:.9rem;
+  transition:border-color .25s;
+}
+.stakeholder-row:hover{border-color:rgba(30,158,108,.35)}
+.stakeholder-row.alt{flex-direction:row-reverse}
+.s-icon{
+  min-width:52px;height:52px;border-radius:14px;
+  display:grid;place-items:center;
+  background:var(--green-dim);font-size:1.3rem;flex-shrink:0;
+}
+.s-content h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.s-content ul{padding-left:1.1rem;color:var(--muted);font-size:.88rem}
+.s-content ul li{margin-bottom:.3rem}
+.inline-link{color:#1a6644;font-size:.84rem;text-decoration:underline;margin-top:.5rem;display:inline-block}
+
+/* ── What you get ────────────────────────────────────────────────── */
+.trust-wrap{
+  border:1px solid var(--border);border-radius:var(--r-xl);
+  padding:1rem;background:rgba(255,255,255,.75);backdrop-filter:blur(18px);
+  margin-top:2rem;
+}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.trust-item{
+  border:1px solid var(--border);border-radius:var(--r-md);
+  padding:.95rem 1rem;color:var(--text);background:rgba(249,253,249,.94);
+  font-size:.9rem;
+}
+.trust-item span{color:#1e7a50;margin-right:.4rem;font-weight:700}
+
+/* ── Impact numbers ──────────────────────────────────────────────── */
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;margin-top:2.8rem}
+.impact-items{display:flex;flex-direction:column;gap:1.4rem}
+.impact-item{display:flex;gap:.9rem;align-items:flex-start}
+.impact-icon{
+  width:42px;height:42px;border-radius:12px;
+  background:var(--green-dim);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+}
+.impact-item h4{font-weight:700;color:var(--text);margin-bottom:.18rem;font-size:.95rem}
+.impact-item p{font-size:.86rem;color:var(--muted);line-height:1.6}
+.impact-nums{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.impact-num-card{
+  border-radius:16px;padding:1.4rem;color:#fff;position:relative;overflow:hidden;
+}
+.impact-num-card::before{
+  content:'';position:absolute;right:-16px;bottom:-16px;
+  width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.07);
+}
+.impact-num-card:nth-child(1){background:linear-gradient(135deg,#1a3c2a,#265c38)}
+.impact-num-card:nth-child(2){background:linear-gradient(135deg,#2d1e0f,#7c4a1f)}
+.impact-num-card:nth-child(3){background:linear-gradient(135deg,#0f2840,#1565c0)}
+.impact-num-card:nth-child(4){background:linear-gradient(135deg,#1a3c2a,#2e7d32)}
+.impact-big{font-family:var(--serif);font-size:2.1rem;font-weight:900;line-height:1}
+.impact-desc{font-size:.78rem;opacity:.75;margin-top:.35rem}
+
+/* ── Founder ─────────────────────────────────────────────────────── */
+.founder{
+  background:radial-gradient(ellipse 50% 60% at 90% 40%,rgba(30,158,108,.08),transparent),
+    rgba(240,247,240,.98);
+}
+.founder-inner{display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:center}
+.founder-avatar{
+  width:150px;height:150px;border-radius:50%;
+  background:linear-gradient(135deg,#1e5928,#37c98f);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:3.2rem;font-weight:900;color:#fff;
+  flex-shrink:0;box-shadow:0 12px 44px rgba(30,158,108,.2);
+  border:3px solid rgba(30,158,108,.4);
+}
+.founder-tag{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--green-dim);border:1px solid rgba(30,158,108,.25);
+  border-radius:100px;padding:.28rem .8rem;
+  font-size:.74rem;font-weight:600;color:#1e5e40;margin-bottom:.7rem;
+}
+.founder h3{font-family:var(--serif);font-size:1.7rem;font-weight:900;margin-bottom:.2rem}
+.founder-role{color:var(--muted);font-size:.88rem;margin-bottom:.9rem}
+.founder-bio{font-size:.94rem;color:var(--muted);line-height:1.75;max-width:550px}
+.founder-skills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.1rem}
+.skill-tag{
+  background:rgba(0,0,0,.04);border:1px solid var(--border-bright);
+  border-radius:100px;padding:.27rem .85rem;
+  font-size:.76rem;font-weight:500;color:#1e5e40;font-family:var(--mono);
+}
+
+/* ── Timeline ────────────────────────────────────────────────────── */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-top:2.5rem}
+.time-node{
+  border:1px solid var(--border);border-radius:var(--r-md);
+  background:rgba(255,255,255,.94);padding:1.1rem;
+}
+.time-node.now{border-color:rgba(30,158,108,.5);box-shadow:var(--glow)}
+.time-phase{
+  font-family:var(--mono);font-size:.7rem;text-transform:uppercase;
+  letter-spacing:.09em;color:#1e5e40;margin-bottom:.4rem;
+}
+.time-node h4{font-weight:700;font-size:.94rem;margin-bottom:.3rem}
+.time-node p{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* ── Revenue model ───────────────────────────────────────────────── */
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:2rem}
+
+/* ── Support tiers ───────────────────────────────────────────────── */
+.support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:2.8rem;align-items:start}
+.support-card{
+  background:rgba(255,255,255,.96);
+  border:1.5px solid rgba(0,0,0,.09);
+  border-radius:20px;padding:2rem;
+  transition:box-shadow .3s,transform .3s,border-color .3s;text-align:center;
+}
+.support-card:hover{box-shadow:var(--shadow);transform:translateY(-5px);border-color:rgba(30,158,108,.35)}
+.support-card.featured{
+  border-color:rgba(184,120,0,.45);
+  background:linear-gradient(160deg,rgba(184,120,0,.08),rgba(253,249,240,.98));
+  position:relative;
+}
+.featured-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--amber);color:#fff;
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:.22rem .9rem;border-radius:100px;white-space:nowrap;
+}
+.tier-icon{font-size:2rem;margin-bottom:.7rem}
+.support-card h3{font-family:var(--serif);font-size:1.25rem;font-weight:700;margin-bottom:.2rem}
+.tier-amount{
+  font-family:var(--serif);font-size:1.7rem;font-weight:900;
+  color:var(--green);margin:.7rem 0;
+}
+.support-card.featured .tier-amount{color:var(--amber)}
+.tier-desc{font-size:.86rem;color:var(--muted);line-height:1.6;margin-bottom:1.3rem}
+.tier-perks{text-align:left;margin-bottom:1.5rem}
+.perk{
+  display:flex;align-items:flex-start;gap:.45rem;
+  font-size:.83rem;color:var(--muted);
+  padding:.3rem 0;border-bottom:1px solid var(--border);
+}
+.perk:last-child{border-bottom:none}
+.perk-check{color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ── Donate CTA ──────────────────────────────────────────────────── */
+.donate{
+  background:linear-gradient(135deg,#cde8d8,#a8d9be);
+  text-align:center;position:relative;overflow:hidden;
+}
+.donate::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e9e6c' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.donate .section-label{color:rgba(30,158,108,.9)}
+.donate .section-title{color:#0d2e1c}
+.donate-sub{font-size:1rem;color:rgba(0,0,0,.62);max-width:500px;margin:.9rem auto 2.2rem;line-height:1.72}
+.donate-btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;margin-bottom:1.8rem}
+.donate-note{font-size:.78rem;color:rgba(0,0,0,.42);position:relative;z-index:1}
+
+/* ── Ways to help ────────────────────────────────────────────────── */
+.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:2.8rem}
+.help-card{
+  border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:1.7rem;display:flex;gap:1.1rem;
+  background:rgba(255,255,255,.92);
+  transition:box-shadow .25s,border-color .25s;
+}
+.help-card:hover{box-shadow:var(--shadow-sm);border-color:rgba(30,158,108,.3)}
+.help-icon{
+  width:46px;height:46px;border-radius:12px;background:var(--green-dim);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+}
+.help-card h4{font-weight:700;color:var(--text);margin-bottom:.28rem;font-size:.95rem}
+.help-card p{font-size:.86rem;color:var(--muted);line-height:1.6;margin-bottom:.65rem}
+.help-link{font-size:.8rem;font-weight:600;color:var(--green);display:inline-flex;align-items:center;gap:.2rem}
+
+/* ── CTA Banner ──────────────────────────────────────────────────── */
+.cta-banner{background:linear-gradient(90deg,#a06200,var(--amber));padding:3.2rem 1.5rem;text-align:center}
+.cta-banner h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);color:#fff;margin-bottom:.65rem;font-weight:900}
+.cta-banner p{color:rgba(255,255,255,.88);margin-bottom:1.4rem;font-size:.97rem}
+
+/* ── FAQ ─────────────────────────────────────────────────────────── */
+.faq-list details{
+  border:1px solid var(--border);border-radius:var(--r-md);
+  background:rgba(255,255,255,.92);padding:.9rem 1rem;margin-bottom:.6rem;
+}
+.faq-list summary{cursor:pointer;font-weight:600;font-size:.92rem;outline:none}
+.faq-list p{margin-top:.55rem;font-size:.87rem;color:var(--muted);line-height:1.65}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+footer{border-top:1px solid var(--border);background:#ddeedd;padding:2.2rem 1.5rem}
+.footer-grid{
+  max-width:1120px;margin:0 auto;
+  display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:1.2rem;
+}
+.footer-logo{font-family:var(--serif);font-size:1.7rem;font-weight:900;color:var(--text)}
+.footer-logo span{color:var(--green)}
+.footer-tagline{font-size:.8rem;color:rgba(30,158,108,.75);margin:.3rem 0 .8rem;font-family:var(--mono)}
+.footer-sub{font-size:.84rem;color:var(--muted);max-width:22rem;line-height:1.65}
+footer h4{font-size:.82rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:.65rem;font-family:var(--mono)}
+footer ul{list-style:none;padding:0}
+footer ul li{margin-bottom:.3rem}
+footer ul a,footer p a{font-size:.84rem;color:rgba(0,0,0,.52);transition:color .18s}
+footer ul a:hover,footer p a:hover{color:var(--text)}
+.footer-note{margin-top:2rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:.74rem;color:rgba(0,0,0,.38);text-align:center}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media(max-width:980px){
+  .hero-inner,.impact-grid,.founder-inner,.footer-grid{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .problem-cards,.solution-grid,.support-grid,.rev-grid,.trust-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr 1fr}
+  .how-steps::before{display:none}
+  .help-grid{grid-template-columns:1fr}
+  .stats-grid,.timeline{grid-template-columns:1fr 1fr}
+  .stakeholder-row,.stakeholder-row.alt{flex-direction:column}
+  .founder-inner{text-align:center}
+  .founder-avatar{margin:0 auto}
+  .founder-skills{justify-content:center}
+}
+@media(max-width:780px){
+  .menu-btn{display:block}
+  .nav-links{
+    position:absolute;top:60px;left:1rem;right:1rem;
+    background:rgba(247,252,247,.97);border:1px solid var(--border);
+    border-radius:14px;padding:.8rem;
+    flex-direction:column;gap:.55rem;display:none;
+  }
+  .nav-links.open{display:flex}
+  nav .btn-primary{display:none}
+}
+@media(max-width:600px){
+  section{padding:3.5rem 1rem}
+  .hero-actions,.donate-btns{flex-direction:column;align-items:flex-start}
+  .how-steps{grid-template-columns:1fr}
+  .stats-grid,.timeline,.impact-nums{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ─────────────────────────────────────────────────────── -->
+<nav id="mainNav">
+  <div class="nav-logo">Saaf<span>Loop</span></div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#who-for">Who it's for</a>
+    <a href="#founder">About</a>
+    <a href="#support">Support</a>
+    <a href="#donate">Donate</a>
+  </div>
+  <a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer" class="btn btn-primary" style="font-size:.83rem;padding:.48rem 1.15rem">Support on Ko-fi</a>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-circles"><span></span><span></span><span></span></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot"></span>Community Platform — India</div>
+      <h1>India's garbage crisis needs a <em>community fix</em></h1>
+      <p class="hero-tagline">Saaf Sheher. Circular Value.</p>
+      <p class="hero-sub">SaafLoop connects housing societies, local composters and farmers so every kilogram of organic waste becomes traceable value — compliance confidence, recurring livelihoods and trusted procurement, not another invisible cost.</p>
+      <div class="hero-actions">
+        <a href="#join-society" class="btn btn-primary">I'm a Society</a>
+        <a href="#join-provider" class="btn btn-outline">I'm a Provider</a>
+        <a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer" class="btn btn-kofi">☕ Support on Ko-fi</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-avatars"><span>R</span><span>A</span><span>K</span><span>M</span><span>+</span></div>
+        <p class="trust-text"><strong>Be one of the first supporters</strong> of this movement</p>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-card-icon">♻️</div>
+          <div><h3>SaafLoop Impact Dashboard</h3><p>Real-time community metrics</p></div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-cell"><div class="stat-big">62M</div><div class="stat-sm">Tonnes of waste/year</div></div>
+          <div class="stat-cell"><div class="stat-big">&lt;20%</div><div class="stat-sm">Actually processed</div></div>
+          <div class="stat-cell"><div class="stat-big">1.8L+</div><div class="stat-sm">RWAs reachable</div></div>
+          <div class="stat-cell"><div class="stat-big">₹35K Cr</div><div class="stat-sm">Manure market size</div></div>
+        </div>
+        <div class="hero-card-footer">
+          <div class="progress-wrap">
+            <div class="progress-meta"><span>Phase 1 Goal: ₹5 Lakhs</span><span id="pct-label">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          </div>
+          <div class="progress-badge">Early<br/>Stage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stat Strip ────────────────────────────────────────────────── -->
+<div class="stats-strip reveal">
+  <div class="stats-grid">
+    <div class="stat-pill"><div class="stat-pill-val">62M+</div><div class="stat-pill-label">Tonnes of waste annually</div></div>
+    <div class="stat-pill"><div class="stat-pill-val">50%</div><div class="stat-pill-label">Is organic — fully processable</div></div>
+    <div class="stat-pill"><div class="stat-pill-val">1.8L+</div><div class="stat-pill-label">Registered RWAs in India</div></div>
+    <div class="stat-pill"><div class="stat-pill-val">₹35,000Cr</div><div class="stat-pill-label">Organic manure market</div></div>
+  </div>
+</div>
+
+<!-- ── Problem ───────────────────────────────────────────────────── -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-label reveal">The Broken System</div>
+    <h2 class="section-title reveal">India's garbage crisis<br/>is <em>not an accident</em></h2>
+    <p class="section-body reveal" style="color:rgba(0,0,0,0.55)">The system is designed to fail. Billions in municipal budgets disappear through corrupt contractor chains while landfills overflow and citizens suffer.</p>
+    <div class="problem-cards">
+      <div class="problem-card reveal">
+        <div class="prob-icon">🗑️</div>
+        <div class="prob-num">62M <span class="prob-unit">tonnes</span></div>
+        <p class="prob-desc">Of urban solid waste generated each year in India — growing at 5% annually with no scalable solution in place.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">😔</div>
+        <div class="prob-num">&lt;20% <span class="prob-unit">processed</span></div>
+        <p class="prob-desc">Of waste is scientifically processed or recycled. The rest rots in landfills, contaminating air, water and soil.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="prob-icon">💸</div>
+        <div class="prob-num">₹10K Cr <span class="prob-unit">/year</span></div>
+        <p class="prob-desc">Spent by municipalities annually — much lost to bribery and contractor corruption with minimal accountability.</p>
+      </div>
+    </div>
+    <div class="chain-wrap reveal">
+      <div class="chain-label">The corrupt contractor chain — where tax money disappears:</div>
+      <div class="chain">
+        <div class="chain-node">Municipal Government</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node broken">3rd Party Contractor</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node broken">Sub-Contractor</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node broken">Ground Worker</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node" style="border-color:rgba(239,68,68,.5);color:rgba(170,0,0,.85)">Garbage Piles Up</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Solution ──────────────────────────────────────────────────── -->
+<section id="solution" style="background:rgba(240,247,240,0.98)">
+  <div class="container">
+    <div class="section-label reveal">Our Answer</div>
+    <h2 class="section-title reveal">The <em>SaafLoop</em> model —<br/>community owns the solution</h2>
+    <p class="section-body reveal">Instead of waiting for government will, we give communities the tools to manage their own waste — and profit from it. Inspired by the Indore model, built for every city.</p>
+    <div class="solution-grid">
+      <div class="solution-card reveal">
+        <div class="sol-step">01 / Collect</div>
+        <div class="sol-icon">🏘️</div>
+        <h3>Housing Societies</h3>
+        <p>RWAs connect with verified local composters. Rated pickups. Auditable records. Compliance confidence. No middlemen, no guesswork.</p>
+      </div>
+      <div class="solution-card reveal">
+        <div class="sol-step">02 / Convert</div>
+        <div class="sol-icon">🌱</div>
+        <h3>Local Composters</h3>
+        <p>Individuals and micro-units turn organic waste into quality compost products. They earn from pickups and from selling manure and derivatives on the marketplace.</p>
+      </div>
+      <div class="solution-card reveal">
+        <div class="sol-step">03 / Connect</div>
+        <div class="sol-icon">🚜</div>
+        <h3>Farmers & Buyers</h3>
+        <p>Farmers buy verified organic inputs directly from composters at below-market rates — cutting costs, improving soil health and completing the loop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ───────────────────────────────────────────────── -->
+<section class="how" id="how-it-works">
+  <div class="container">
+    <div class="section-label reveal" style="text-align:center">The Process</div>
+    <h2 class="section-title reveal" style="text-align:center">How SaafLoop works</h2>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-num">1</div>
+        <h4>Society Signs Up</h4>
+        <p>Housing society commits to segregating organic waste and registers in minutes.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">2</div>
+        <h4>Matched with Composter</h4>
+        <p>We match them with a verified local composter based on location and capacity.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">3</div>
+        <h4>Verified Pickups</h4>
+        <p>Organic waste is collected, processed and tracked with ratings on both sides.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">4</div>
+        <h4>Products Sold</h4>
+        <p>Compost and derivatives are listed on the marketplace. Farmers buy direct. Revenue returns to community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Who it's for ───────────────────────────────────────────────── -->
+<section id="who-for" style="background:rgba(245,250,244,.98)">
+  <div class="container">
+    <div class="section-label reveal">Five Stakeholders</div>
+    <h2 class="section-title reveal">Who this platform<br/>is built for</h2>
+    <div style="margin-top:2rem">
+      <article class="stakeholder-row reveal">
+        <div class="s-icon">🏢</div>
+        <div class="s-content">
+          <h3>Housing Societies & RWAs</h3>
+          <ul><li>Audit-ready pickup and processing records — compliance without paperwork scrambles.</li><li>One platform replacing fragmented vendor chaos with accountability and cost visibility.</li><li>Fewer resident complaints and follow-up calls every week.</li></ul>
+          <a class="inline-link" href="#join-society">Join as Society →</a>
+        </div>
+      </article>
+      <article class="stakeholder-row alt reveal">
+        <div class="s-icon">♻</div>
+        <div class="s-content">
+          <h3>Composters & Providers</h3>
+          <ul><li>Consistent local demand that fills capacity and stabilises income.</li><li>Digital reputation that compounds with every verified job and rating.</li><li>More earnings from services plus productized compost and waste-derived outputs.</li></ul>
+          <a class="inline-link" href="#join-provider">Join as Provider →</a>
+        </div>
+      </article>
+      <article class="stakeholder-row reveal">
+        <div class="s-icon">🌾</div>
+        <div class="s-content">
+          <h3>Farmers & Buyers</h3>
+          <ul><li>Verified organic inputs without sourcing headaches or middleman markups.</li><li>Consistent quality and transparent processing method information.</li><li>Reduced fertilizer costs with long-term soil health benefits.</li></ul>
+        </div>
+      </article>
+      <article class="stakeholder-row alt reveal">
+        <div class="s-icon">🤝</div>
+        <div class="s-content">
+          <h3>NGOs, CSR & Corporates</h3>
+          <ul><li>Run impact programs on measurable, structured community operations data.</li><li>Track outcomes beyond vanity metrics — real livelihood and waste diversion numbers.</li><li>Co-build sustainability programs with clear reporting for compliance and PR.</li></ul>
+        </div>
+      </article>
+      <article class="stakeholder-row reveal">
+        <div class="s-icon">🏛</div>
+        <div class="s-content">
+          <h3>Municipalities</h3>
+          <ul><li>Ward-level intelligence for planning and resource allocation.</li><li>A complementary layer to existing systems — not a replacement or rival.</li><li>Better visibility into decentralised waste movement and community outcomes.</li></ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── What you get ───────────────────────────────────────────────── -->
+<section style="background:rgba(238,246,238,.98)">
+  <div class="container">
+    <div class="section-label reveal" style="text-align:center">Platform Value</div>
+    <h2 class="section-title reveal" style="text-align:center">What you get on SaafLoop</h2>
+    <div class="trust-wrap reveal">
+      <div class="trust-grid">
+        <div class="trust-item"><span>✓</span> Verified pickup trails</div>
+        <div class="trust-item"><span>✓</span> Audit-ready compliance records</div>
+        <div class="trust-item"><span>✓</span> Digital provider reputation</div>
+        <div class="trust-item"><span>✓</span> Marketplace visibility</div>
+        <div class="trust-item"><span>✓</span> Product sales enablement</div>
+        <div class="trust-item"><span>✓</span> Transparent performance data</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Impact Numbers ─────────────────────────────────────────────── -->
+<section id="impact" style="background:rgba(244,250,244,.97)">
+  <div class="container">
+    <div class="impact-grid">
+      <div>
+        <div class="section-label reveal">Why This Matters</div>
+        <h2 class="section-title reveal">Real impact<br/>for <em>real people</em></h2>
+        <div class="impact-items">
+          <div class="impact-item reveal">
+            <div class="impact-icon">🧑‍🌾</div>
+            <div><h4>Livelihoods for Composters</h4><p>Local composters earn ₹5,200–₹11,200/month from pickups and product sales. Real recurring income from community waste.</p></div>
+          </div>
+          <div class="impact-item reveal">
+            <div class="impact-icon">🌾</div>
+            <div><h4>Cheaper Inputs for Farmers</h4><p>Farmers access quality organic manure at 30–50% below market, reducing fertilizer dependency and soil degradation.</p></div>
+          </div>
+          <div class="impact-item reveal">
+            <div class="impact-icon">🏙️</div>
+            <div><h4>Cleaner Cities</h4><p>Societies get reliable, accountable waste management — with compliance logs, not just promises and pending complaints.</p></div>
+          </div>
+          <div class="impact-item reveal">
+            <div class="impact-icon">🌍</div>
+            <div><h4>Less Landfill, Less Carbon</h4><p>Every tonne of organic waste composted prevents roughly 1.5 tonnes of CO₂ equivalent emissions from landfill decomposition.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="impact-nums reveal">
+        <div class="impact-num-card"><div class="impact-big">10K</div><div class="impact-desc">Tonnes of waste diverted by Year 3</div></div>
+        <div class="impact-num-card"><div class="impact-big">4K+</div><div class="impact-desc">Composter livelihoods created</div></div>
+        <div class="impact-num-card"><div class="impact-big">20K</div><div class="impact-desc">Farmers accessing affordable manure</div></div>
+        <div class="impact-num-card"><div class="impact-big">8K</div><div class="impact-desc">Societies with reliable collection</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Founder ────────────────────────────────────────────────────── -->
+<section class="founder" id="founder">
+  <div class="container">
+    <div class="founder-inner">
+      <div class="founder-avatar">SP</div>
+      <div>
+        <div class="founder-tag reveal">👋 The Person Behind SaafLoop</div>
+        <h3 class="reveal">Satendra Pal</h3>
+        <p class="founder-role reveal">Founder</p>
+        <p class="founder-bio reveal">I'm a software engineer who has spent years building two-sided marketplace platforms in production — from salon booking apps to FMCG bulk marketplaces. I know how to build what SaafLoop needs technically. What I need is a community of believers to help launch the first pilot.<br/><br/>I grew up watching garbage pile up in my city while billions were spent on contractors who delivered nothing. SaafLoop is my answer. Not a government petition. Not a protest. <strong style="color:var(--text)">A platform that lets communities fix this themselves.</strong></p>
+        <div class="founder-skills reveal">
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">NestJS</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Marketplace Architecture</span>
+          <span class="skill-tag">Real-time Systems</span>
+          <span class="skill-tag">Razorpay / UPI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pilot Timeline ─────────────────────────────────────────────── -->
+<section style="background:rgba(236,245,236,.98)">
+  <div class="container">
+    <div class="section-label reveal">Roadmap</div>
+    <h2 class="section-title reveal">Pilot &amp; timeline</h2>
+    <div class="timeline">
+      <div class="time-node now reveal">
+        <div class="time-phase">Phase 1 — Now</div>
+        <h4>Simple Web Platform</h4>
+        <p>One city pilot, first societies, first providers, verified weekly cycles and affiliate bridge revenue.</p>
+      </div>
+      <div class="time-node reveal">
+        <div class="time-phase">Phase 2</div>
+        <h4>Marketplace + SaaS</h4>
+        <p>Provider CRM, society dashboards, payments, product listings and compliance reporting tools.</p>
+      </div>
+      <div class="time-node reveal">
+        <div class="time-phase">Phase 3</div>
+        <h4>Own Services + Scale</h4>
+        <p>Selective managed operations in high-demand clusters, multi-city expansion and CSR integrations.</p>
+      </div>
+      <div class="time-node reveal">
+        <div class="time-phase">Phase 4</div>
+        <h4>National Layer</h4>
+        <p>Multi-city network with municipal partnerships, data contracts and enterprise integrations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Revenue Model ──────────────────────────────────────────────── -->
+<section style="background:rgba(242,249,242,.98)">
+  <div class="container">
+    <div class="section-label reveal">Business Model</div>
+    <h2 class="section-title reveal">Revenue &amp; sustainability model</h2>
+    <p class="section-body reveal">SaafLoop is built to sustain itself — not only on goodwill.</p>
+    <div class="rev-grid">
+      <div class="card reveal">
+        <h3 style="font-family:var(--serif);margin-bottom:.5rem">Recurring SaaS</h3>
+        <p style="font-size:.9rem;color:var(--muted)">Societies and providers subscribe to operational tooling: tracking, compliance reporting, invoicing and customer workflow.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="font-family:var(--serif);margin-bottom:.5rem">Marketplace Commissions</h3>
+        <p style="font-size:.9rem;color:var(--muted)">8–12% commission on manure and waste-product transactions creates shared upside as network volume grows.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="font-family:var(--serif);margin-bottom:.5rem">Bridge &amp; Auxiliary Revenue</h3>
+        <p style="font-size:.9rem;color:var(--muted)">Affiliate links, premium listings, CSR partnerships and training diversify early revenue from Day 1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Join Sections ──────────────────────────────────────────────── -->
+<section id="join-society" style="background:rgba(240,247,240,.98)">
+  <div class="container" style="display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:start">
+    <div>
+      <div class="section-label reveal">For Societies</div>
+      <h2 class="section-title reveal" style="font-size:clamp(1.6rem,2.5vw,2.2rem)">Join as Society / Citizen</h2>
+      <p class="section-body reveal">Tell us your locality, current waste setup and pain points. We will shortlist pilots and connect you with nearby verified providers as we expand city by city.</p>
+      <ul style="padding-left:1.1rem;color:var(--muted);font-size:.9rem;margin-top:.9rem" class="reveal">
+        <li style="margin-bottom:.35rem">Built for societies seeking compliance confidence and predictable costs.</li>
+        <li style="margin-bottom:.35rem">Best suited for communities ready for structured segregation workflows.</li>
+        <li>Clear onboarding and pilot guidance included.</li>
+      </ul>
+      <div style="margin-top:1.4rem" class="reveal">
+        <a href="https://forms.gle/VtxXxw1doNe63wL46" target="_blank" rel="noreferrer" class="btn btn-primary">Open Society / Citizen Form</a>
+      </div>
+    </div>
+    <div class="card reveal" style="background:linear-gradient(140deg,rgba(30,158,108,.1),rgba(240,248,240,.95));border-color:rgba(30,158,108,.28)">
+      <h3 style="font-family:var(--serif);margin-bottom:.6rem">Why stay on platform?</h3>
+      <p style="font-size:.88rem;color:var(--muted)">Your compliance trail, service history and vendor benchmarks live centrally — making governance easier than off-platform coordination and protecting your audit position.</p>
+    </div>
+  </div>
+</section>
+
+<section id="join-provider" style="background:rgba(237,246,237,.98)">
+  <div class="container" style="display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:start">
+    <div>
+      <div class="section-label reveal">For Providers</div>
+      <h2 class="section-title reveal" style="font-size:clamp(1.6rem,2.5vw,2.2rem)">Join as Composter / Provider</h2>
+      <p class="section-body reveal">Share your service area, capacity and infrastructure. SaafLoop helps you build a durable business with consistent demand — not just one-time gigs.</p>
+      <ul style="padding-left:1.1rem;color:var(--muted);font-size:.9rem;margin-top:.9rem" class="reveal">
+        <li style="margin-bottom:.35rem">Get discovered by nearby societies and institutions in your radius.</li>
+        <li style="margin-bottom:.35rem">Build verified reputation through transparent service performance trails.</li>
+        <li>Earn from both collection services and productized waste outputs.</li>
+      </ul>
+      <div style="margin-top:1.4rem" class="reveal">
+        <a href="https://forms.gle/2BXKpoo9cnmBZq659" target="_blank" rel="noreferrer" class="btn btn-outline">Open Composter / Provider Form</a>
+      </div>
+    </div>
+    <div class="card reveal" style="background:linear-gradient(140deg,rgba(30,158,108,.1),rgba(240,248,240,.95));border-color:rgba(30,158,108,.28)">
+      <h3 style="font-family:var(--serif);margin-bottom:.6rem">Why stay on platform?</h3>
+      <p style="font-size:.88rem;color:var(--muted)">New lead flow, structured reputation and invoicing tools keep your growth compounding — even as you deepen direct relationships with your best clients.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Support Tiers ──────────────────────────────────────────────── -->
+<section id="support" style="background:rgba(240,247,240,.98)">
+  <div class="container">
+    <div class="section-label reveal">Support SaafLoop</div>
+    <h2 class="section-title reveal">Every contribution<br/><em>builds the movement</em></h2>
+    <p class="section-body reveal">We are raising ₹5 Lakhs to launch our first 10 pilots. No amount is too small. Every rupee goes directly to operations — zero salaries in Phase 1.</p>
+    <div class="support-grid">
+      <div class="support-card reveal">
+        <div class="tier-icon">🌱</div>
+        <h3>Seed Supporter</h3>
+        <div class="tier-amount">₹500 – ₹2,000</div>
+        <p class="tier-desc">You believe in the idea. Help us plant the first seed and get SaafLoop off the ground.</p>
+        <div class="tier-perks">
+          <div class="perk"><span class="perk-check">✓</span> Public supporter recognition on website</div>
+          <div class="perk"><span class="perk-check">✓</span> Monthly impact update emails</div>
+          <div class="perk"><span class="perk-check">✓</span> SaafLoop founding community badge</div>
+        </div>
+        <a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer" class="btn btn-outline" style="width:100%;justify-content:center">Donate on Ko-fi</a>
+      </div>
+      <div class="support-card featured reveal">
+        <div class="featured-badge">⭐ Most Impactful</div>
+        <div class="tier-icon">♻️</div>
+        <h3>Community Champion</h3>
+        <div class="tier-amount">₹5,000 – ₹20,000</div>
+        <p class="tier-desc">Fund one society–composter pair for a full month of operations. See exactly where your money goes.</p>
+        <div class="tier-perks">
+          <div class="perk"><span class="perk-check">✓</span> Everything in Seed Supporter</div>
+          <div class="perk"><span class="perk-check">✓</span> Named pilot sponsor — your name on the pilot</div>
+          <div class="perk"><span class="perk-check">✓</span> Monthly detailed impact report for your pilot</div>
+          <div class="perk"><span class="perk-check">✓</span> Founding investor certificate</div>
+          <div class="perk"><span class="perk-check">✓</span> Direct call with the founder</div>
+        </div>
+        <a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer" class="btn btn-amber" style="width:100%;justify-content:center">Donate on Ko-fi</a>
+      </div>
+      <div class="support-card reveal">
+        <div class="tier-icon">🚀</div>
+        <h3>Impact Investor</h3>
+        <div class="tier-amount">₹50,000+</div>
+        <p class="tier-desc">Serious about impact investing? Let's discuss equity, convertible notes or grant funding.</p>
+        <div class="tier-perks">
+          <div class="perk"><span class="perk-check">✓</span> Everything in Champion</div>
+          <div class="perk"><span class="perk-check">✓</span> Equity / convertible note discussion</div>
+          <div class="perk"><span class="perk-check">✓</span> Quarterly investor update calls</div>
+          <div class="perk"><span class="perk-check">✓</span> Advisory board seat (₹2L+)</div>
+          <div class="perk"><span class="perk-check">✓</span> Co-branding on platform launch</div>
+        </div>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vicharshala9984@gmail.com&su=SaafLoop%20Investment%20Inquiry" target="_blank" rel="noreferrer" class="btn btn-primary" style="width:100%;justify-content:center">Email to Discuss</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Donate CTA ─────────────────────────────────────────────────── -->
+<section class="donate" id="donate">
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section-label">Support the Mission</div>
+    <h2 class="section-title" style="margin-top:.5rem">Ready to fix India's<br/>garbage problem?</h2>
+    <p class="donate-sub">Your support funds the first pilot. ₹5,000 keeps one society–composter pair running for a full month. Let's build this together — no government approval required.</p>
+    <div class="donate-btns">
+      <a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer" class="btn btn-kofi" style="font-size:1rem;padding:.9rem 2rem">☕ Support on Ko-fi</a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vicharshala9984@gmail.com&su=SaafLoop%20Investment%20Inquiry" target="_blank" rel="noreferrer" class="btn btn-outline" style="border-color:rgba(0,0,0,.28);color:#0d2e1c;padding:.9rem 2rem">📧 Discuss Investment</a>
+    </div>
+    <p class="donate-note">All donations via Ko-fi are transparent. Phase 1 has zero founder salary — 100% goes to operations.<br/>Equity &amp; investment: vicharshala9984@gmail.com</p>
+  </div>
+</section>
+
+<!-- ── Ways to Help ───────────────────────────────────────────────── -->
+<section id="get-involved" style="background:rgba(243,250,243,.97)">
+  <div class="container">
+    <div class="section-label reveal">Not Ready to Donate?</div>
+    <h2 class="section-title reveal">There are many ways<br/>to <em>join the loop</em></h2>
+    <div class="help-grid">
+      <div class="help-card reveal">
+        <div class="help-icon">🏘️</div>
+        <div>
+          <h4>Are you in an RWA?</h4>
+          <p>Become a SaafLoop Founding Society. We will set up your pilot and handle the initial coordination — zero risk to start.</p>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vicharshala9984@gmail.com&su=RWA%20Pilot%20Inquiry" target="_blank" rel="noreferrer" class="help-link">Get your society involved →</a>
+        </div>
+      </div>
+      <div class="help-card reveal">
+        <div class="help-icon">🌿</div>
+        <div>
+          <h4>Do you compost?</h4>
+          <p>Join as a Beta Composter. Get your first 5 society connections at zero commission and earn from your composting skills.</p>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vicharshala9984@gmail.com&su=Composter%20Signup" target="_blank" rel="noreferrer" class="help-link">Sign up as a composter →</a>
+        </div>
+      </div>
+      <div class="help-card reveal">
+        <div class="help-icon">📣</div>
+        <div>
+          <h4>Spread the word</h4>
+          <p>Share this page on Reddit, LinkedIn, Twitter or your housing society WhatsApp group. Every share matters for early traction.</p>
+          <a href="#" onclick="shareThis()" class="help-link">Share SaafLoop →</a>
+        </div>
+      </div>
+      <div class="help-card reveal">
+        <div class="help-icon">🤝</div>
+        <div>
+          <h4>Work with us</h4>
+          <p>We need community coordinators, content volunteers and city leads. No salary required in Phase 1 — just mission alignment.</p>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vicharshala9984@gmail.com&su=Volunteer%20Inquiry" target="_blank" rel="noreferrer" class="help-link">Volunteer with SaafLoop →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Banner ─────────────────────────────────────────────────── -->
+<div class="cta-banner">
+  <div class="container">
+    <h2>Indore proved it works. SaafLoop makes it possible everywhere.</h2>
+    <p>7 years of proof that community waste management creates revenue, jobs and cleaner cities — without waiting for government will.</p>
+    <div style="display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer" class="btn btn-primary">☕ Support on Ko-fi</a>
+      <a href="#join-society" class="btn" style="background:rgba(255,255,255,.25);color:#fff;border:2px solid rgba(255,255,255,.5)">Join as Society</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ───────────────────────────────────────────────────────── -->
+<section id="faq" style="background:rgba(243,250,243,.97)">
+  <div class="container">
+    <div class="section-label reveal">Common Questions</div>
+    <h2 class="section-title reveal">Frequently asked questions</h2>
+    <div class="faq-list" style="margin-top:1.8rem">
+      <details class="reveal"><summary>Is SaafLoop a government or municipal initiative?</summary><p>No. SaafLoop is an independent platform designed to complement municipal systems with better coordination and transparent community-level operations — not replace or depend on them.</p></details>
+      <details class="reveal"><summary>Will you pick up waste daily from Day 1?</summary><p>Pilot rollouts are location and provider dependent. We prioritise reliability over overpromising and scale frequency where capacity is proven.</p></details>
+      <details class="reveal"><summary>How are composters and providers verified?</summary><p>We begin with identity and capacity checks, then build trust through service history, ratings and documented performance over time.</p></details>
+      <details class="reveal"><summary>Is my data safe?</summary><p>We collect only required operational data. Reports for external stakeholders are aggregated and anonymised where applicable.</p></details>
+      <details class="reveal"><summary>What if my society and composter go direct after meeting on SaafLoop?</summary><p>SaafLoop is built around long-term workflow value — compliance records, reputation, discovery and reporting continue to create operational value for both sides even as direct relationships grow.</p></details>
+      <details class="reveal"><summary>Can I volunteer or collaborate?</summary><p>Yes. Individuals, NGOs, campus groups and domain experts are welcome to collaborate on outreach, training, data and operations work.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Saaf<span>Loop</span></div>
+      <div class="footer-tagline">Saaf Sheher, Saaf Soch — Clean City, Clean Thinking.</div>
+      <p class="footer-sub">Building India's community waste infrastructure with business durability and measurable circular impact — one neighbourhood at a time.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#problem">The Problem</a></li>
+        <li><a href="#solution">Our Solution</a></li>
+        <li><a href="#who-for">Who It's For</a></li>
+        <li><a href="#support">Support Tiers</a></li>
+        <li><a href="#donate">Donate</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=vicharshala9984@gmail.com" target="_blank" rel="noreferrer">vicharshala9984@gmail.com</a></li>
+        <li><a href="https://x.com/theWatcher_9984" target="_blank" rel="noreferrer">X — @theWatcher_9984</a></li>
+        <li><a href="https://www.linkedin.com/in/satendra-pal-943540209/" target="_blank" rel="noreferrer">LinkedIn — Satendra Pal</a></li>
+        <li><a href="https://ko-fi.com/thewatcherlabs/goal?g=1" target="_blank" rel="noreferrer">Support on Ko-fi</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-note">
+    © 2026 SaafLoop · India<br/>
+    This is an early-stage community fundraise. All funds usage is publicly disclosed. Society/Citizen and Composter/Provider onboarding forms are live.<br/>
+    Built by Satendra Pal · Founder &amp; Full-Stack Engineer · IIIT Kalyani · Lucknow, India
+  </div>
+</footer>
+
+<script>
+// Nav scroll shadow
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));
+
+// Mobile nav toggle
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click',()=>{
+  const open = navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',String(open));
+});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  navLinks.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded','false');
+}));
+
+// Scroll reveal (staggered)
+const ease = 'cubic-bezier(0.22,1,0.36,1)';
+const obs = new IntersectionObserver((entries)=>{
+  let i=0;
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*80);
+      i++;
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Progress bar
+const fill = document.getElementById('progress-fill');
+const pctLabel = document.getElementById('pct-label');
+const pObs = new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting){
+    setTimeout(()=>{fill.style.width='8%';pctLabel.textContent='Early Stage';},400);
+    pObs.disconnect();
+  }
+},{threshold:0.5});
+if(fill) pObs.observe(fill);
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// Share
+function shareThis(){
+  const text='SaafLoop is trying to fix India\'s garbage problem through community-driven circular waste management. Check it out! 🌱♻️';
+  const url=window.location.href;
+  if(navigator.share){navigator.share({title:'SaafLoop',text,url});}
+  else{navigator.clipboard.writeText(url).then(()=>alert('Link copied! Share it anywhere.'));}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SaafLoop — Join the Movement to Fix India's Garbage Crisis</title>
+<meta name="description" content="India generates 62 million tonnes of waste annually. Less than 20% is processed. SaafLoop is a community-driven platform to change that. Join us."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Variables ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-900:#0d2b12;
+  --green-800:#1a3d1f;
+  --green-700:#1e5928;
+  --green-600:#2d7a38;
+  --green-400:#4caf50;
+  --green-200:#a5d6a7;
+  --green-50:#f1f8f2;
+  --earth:#5d3a1a;
+  --earth-light:#f5ede4;
+  --amber:#e8890c;
+  --amber-light:#fff3cd;
+  --cream:#faf8f3;
+  --text:#1a1a1a;
+  --text-mid:#444;
+  --text-light:#777;
+  --white:#ffffff;
+  --radius:12px;
+  --shadow:0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.14);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ── Noise texture overlay ─────────────────────────────────────── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.4;
+}
+
+/* ── Nav ───────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2rem;
+  background:rgba(250,248,243,0.88);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(45,122,56,0.12);
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:900;
+  color:var(--green-700);
+  letter-spacing:-0.02em;
+}
+.nav-logo span{color:var(--amber)}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{
+  font-size:.875rem;font-weight:500;color:var(--text-mid);
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--green-700)}
+.nav-cta{
+  background:var(--green-700);color:var(--white)!important;
+  padding:.5rem 1.2rem;border-radius:100px;
+  font-weight:600!important;font-size:.85rem!important;
+  transition:background .2s,transform .15s!important;
+}
+.nav-cta:hover{background:var(--green-600)!important;transform:translateY(-1px)!important}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:6rem 2rem 4rem;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 30%, rgba(45,122,56,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(232,137,12,0.08) 0%, transparent 60%),
+    var(--cream);
+}
+.hero-circles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-circles span{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(45,122,56,0.12);
+  animation:pulse 8s ease-in-out infinite;
+}
+.hero-circles span:nth-child(1){width:600px;height:600px;right:-200px;top:-200px;animation-delay:0s}
+.hero-circles span:nth-child(2){width:400px;height:400px;right:-100px;top:-50px;animation-delay:1s}
+.hero-circles span:nth-child(3){width:200px;height:200px;left:5%;bottom:20%;animation-delay:2s}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.05);opacity:1}}
+
+.hero-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+  position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--amber-light);
+  border:1px solid rgba(232,137,12,0.3);
+  border-radius:100px;
+  padding:.35rem .9rem;
+  font-size:.8rem;font-weight:600;color:var(--earth);
+  margin-bottom:1.5rem;
+  animation:fadeUp .6s ease both;
+}
+.badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--amber);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,4.5vw,3.8rem);
+  font-weight:900;line-height:1.1;
+  letter-spacing:-0.03em;
+  color:var(--green-900);
+  animation:fadeUp .7s .1s ease both;
+}
+.hero h1 em{
+  font-style:italic;color:var(--green-600);
+  position:relative;
+}
+.hero h1 em::after{
+  content:'';
+  position:absolute;left:0;bottom:-2px;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green-400),var(--amber));
+  border-radius:2px;
+}
+.hero-sub{
+  margin-top:1.2rem;
+  font-size:1.1rem;color:var(--text-mid);
+  line-height:1.7;max-width:480px;
+  animation:fadeUp .7s .2s ease both;
+}
+.hero-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  margin-top:2rem;
+  animation:fadeUp .7s .3s ease both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.8rem;border-radius:100px;
+  font-weight:600;font-size:.95rem;
+  cursor:pointer;border:none;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  background:var(--green-700);color:var(--white);
+  box-shadow:0 4px 20px rgba(45,122,56,0.35);
+}
+.btn-primary:hover{background:var(--green-600);box-shadow:0 8px 28px rgba(45,122,56,0.4)}
+.btn-amber{
+  background:var(--amber);color:var(--white);
+  box-shadow:0 4px 20px rgba(232,137,12,0.35);
+}
+.btn-amber:hover{box-shadow:0 8px 28px rgba(232,137,12,0.45)}
+.btn-outline{
+  background:transparent;color:var(--green-700);
+  border:2px solid var(--green-700);
+}
+.btn-outline:hover{background:var(--green-50)}
+
+.hero-trust{
+  display:flex;align-items:center;gap:.8rem;
+  margin-top:1.5rem;
+  animation:fadeUp .7s .4s ease both;
+}
+.trust-avatars{display:flex}
+.trust-avatars span{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--cream);
+  background:var(--green-200);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:700;color:var(--green-800);
+  margin-left:-8px;
+}
+.trust-avatars span:first-child{margin-left:0}
+.trust-text{font-size:.8rem;color:var(--text-light)}
+.trust-text strong{color:var(--text);font-weight:600}
+
+/* Hero visual card */
+.hero-visual{animation:fadeUp .8s .15s ease both}
+.hero-card{
+  background:var(--white);
+  border-radius:24px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  border:1px solid rgba(45,122,56,0.1);
+}
+.hero-card-header{
+  background:linear-gradient(135deg,var(--green-800),var(--green-600));
+  padding:1.5rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-card-icon{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;flex-shrink:0;
+}
+.hero-card-header h3{
+  font-family:'Playfair Display',serif;
+  color:var(--white);font-size:1.2rem;
+}
+.hero-card-header p{color:rgba(255,255,255,0.75);font-size:.85rem}
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--green-50);
+}
+.stat-item{
+  background:var(--white);
+  padding:1.2rem 1.5rem;
+  position:relative;overflow:hidden;
+}
+.stat-item::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green-400),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.stat-item:hover::before{opacity:1}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;font-weight:900;
+  color:var(--green-700);line-height:1;
+}
+.stat-label{font-size:.78rem;color:var(--text-light);margin-top:.25rem}
+.hero-card-footer{
+  padding:1.2rem 1.5rem;
+  border-top:1px solid var(--green-50);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.progress-wrap{flex:1;margin-right:1rem}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-size:.78rem;color:var(--text-light);margin-bottom:.4rem;
+}
+.progress-bar{
+  height:8px;background:var(--green-50);border-radius:100px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--green-600),var(--green-400));
+  width:0%;transition:width 1.5s ease;
+}
+.progress-pct{
+  font-size:.85rem;font-weight:700;color:var(--green-700);
+  white-space:nowrap;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Section layout ────────────────────────────────────────────── */
+section{padding:5rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;font-weight:500;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--green-600);
+  margin-bottom:.75rem;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,3vw,2.8rem);
+  font-weight:900;line-height:1.15;
+  color:var(--green-900);letter-spacing:-0.02em;
+}
+.section-title em{font-style:italic;color:var(--green-600)}
+.section-body{
+  font-size:1.05rem;color:var(--text-mid);
+  line-height:1.75;max-width:640px;margin-top:1rem;
+}
+
+/* ── Problem section ───────────────────────────────────────────── */
+.problem{background:var(--green-900);color:var(--white);position:relative;overflow:hidden}
+.problem::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 90% 50%,rgba(76,175,80,0.15),transparent);
+}
+.problem .section-label{color:var(--green-200)}
+.problem .section-title{color:var(--white)}
+.problem .section-title em{color:var(--green-200)}
+.problem-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:3rem;
+}
+.problem-card{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--radius);
+  padding:1.8rem;
+  transition:background .3s,transform .3s;
+  position:relative;z-index:1;
+}
+.problem-card:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px)}
+.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:900;
+  color:var(--green-400);line-height:1;
+}
+.problem-unit{font-size:1rem;font-weight:400;color:var(--green-200)}
+.problem-desc{
+  font-size:.9rem;color:rgba(255,255,255,0.65);
+  margin-top:.5rem;line-height:1.6;
+}
+.chain-wrap{margin-top:3rem;position:relative;z-index:1}
+.chain-label{font-size:.85rem;color:var(--green-200);margin-bottom:1rem;font-weight:500}
+.chain{
+  display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;
+}
+.chain-node{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:8px;padding:.6rem 1rem;
+  font-size:.85rem;color:var(--white);
+  font-weight:500;
+}
+.chain-arrow{color:var(--amber);font-size:1.2rem;font-weight:700}
+.chain-node.broken{
+  border-color:rgba(239,68,68,0.5);
+  background:rgba(239,68,68,0.1);
+  color:rgba(255,180,180,0.9);
+  position:relative;
+}
+.chain-node.broken::after{
+  content:'✗';
+  position:absolute;top:-8px;right:-6px;
+  font-size:.7rem;background:#ef4444;color:white;
+  border-radius:50%;width:16px;height:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── Solution ──────────────────────────────────────────────────── */
+.solution{background:var(--cream)}
+.solution-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:3rem;
+}
+.solution-card{
+  background:var(--white);
+  border:1px solid rgba(45,122,56,0.1);
+  border-radius:16px;padding:2rem;
+  transition:box-shadow .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.solution-card::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green-600),var(--green-400));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
+}
+.solution-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-6px)}
+.solution-card:hover::after{transform:scaleX(1)}
+.solution-step{
+  font-family:'DM Mono',monospace;
+  font-size:.7rem;letter-spacing:.1em;
+  color:var(--green-600);font-weight:500;
+  margin-bottom:.75rem;
+}
+.solution-icon-wrap{
+  width:56px;height:56px;border-radius:16px;
+  background:var(--green-50);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;margin-bottom:1rem;
+}
+.solution-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem;font-weight:700;
+  color:var(--green-900);margin-bottom:.5rem;
+}
+.solution-card p{font-size:.9rem;color:var(--text-mid);line-height:1.65}
+
+/* ── How it works ──────────────────────────────────────────────── */
+.how{background:var(--green-50)}
+.how-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;margin-top:3rem;position:relative;
+}
+.how-steps::before{
+  content:'';
+  position:absolute;top:32px;left:10%;right:10%;height:2px;
+  background:linear-gradient(90deg,var(--green-400),var(--amber));
+  z-index:0;
+}
+.how-step{
+  text-align:center;position:relative;z-index:1;
+}
+.how-step-num{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--white);
+  border:2px solid var(--green-400);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:900;color:var(--green-700);
+  box-shadow:0 4px 16px rgba(45,122,56,0.15);
+  transition:background .3s,transform .3s;
+}
+.how-step:hover .how-step-num{background:var(--green-700);color:var(--white);transform:scale(1.1)}
+.how-step h4{
+  font-weight:700;font-size:.95rem;
+  color:var(--green-900);margin-bottom:.35rem;
+}
+.how-step p{font-size:.83rem;color:var(--text-light);line-height:1.6}
+
+/* ── Impact ────────────────────────────────────────────────────── */
+.impact{background:var(--white)}
+.impact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+  margin-top:3rem;
+}
+.impact-items{display:flex;flex-direction:column;gap:1.5rem}
+.impact-item{
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.impact-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--green-50);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.impact-item h4{font-weight:700;color:var(--green-900);margin-bottom:.2rem}
+.impact-item p{font-size:.9rem;color:var(--text-mid);line-height:1.6}
+.impact-numbers{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
+.impact-num-card{
+  background:linear-gradient(135deg,var(--green-800),var(--green-600));
+  border-radius:16px;padding:1.5rem;color:var(--white);
+  position:relative;overflow:hidden;
+}
+.impact-num-card::before{
+  content:'';position:absolute;right:-20px;bottom:-20px;
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(255,255,255,0.07);
+}
+.impact-num-card:nth-child(2){
+  background:linear-gradient(135deg,var(--earth),#8d5524);
+}
+.impact-num-card:nth-child(3){
+  background:linear-gradient(135deg,#1565c0,#1976d2);
+}
+.impact-num-card:nth-child(4){
+  background:linear-gradient(135deg,#2e7d32,#43a047);
+}
+.impact-big{
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;font-weight:900;line-height:1;
+}
+.impact-desc{font-size:.8rem;opacity:.8;margin-top:.4rem}
+
+/* ── Founder ───────────────────────────────────────────────────── */
+.founder{background:var(--earth-light);position:relative;overflow:hidden}
+.founder::before{
+  content:'';position:absolute;
+  right:-100px;top:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(93,58,26,0.08),transparent 70%);
+}
+.founder-inner{
+  display:grid;grid-template-columns:auto 1fr;
+  gap:3rem;align-items:center;
+  position:relative;z-index:1;
+}
+.founder-avatar{
+  width:160px;height:160px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green-700),var(--green-400));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;font-weight:900;color:var(--white);
+  flex-shrink:0;
+  box-shadow:0 12px 40px rgba(93,58,26,0.2);
+  border:4px solid var(--white);
+}
+.founder-tag{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--white);
+  border:1px solid rgba(93,58,26,0.15);
+  border-radius:100px;padding:.3rem .8rem;
+  font-size:.75rem;font-weight:600;color:var(--earth);
+  margin-bottom:.75rem;
+}
+.founder h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;font-weight:900;color:var(--green-900);
+  margin-bottom:.25rem;
+}
+.founder-role{color:var(--text-light);font-size:.9rem;margin-bottom:1rem}
+.founder-bio{
+  font-size:.95rem;color:var(--text-mid);line-height:1.75;
+  max-width:560px;
+}
+.founder-skills{
+  display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;
+}
+.skill-tag{
+  background:var(--white);
+  border:1px solid rgba(45,122,56,0.2);
+  border-radius:100px;
+  padding:.3rem .9rem;
+  font-size:.78rem;font-weight:500;color:var(--green-700);
+  font-family:'DM Mono',monospace;
+}
+
+/* ── Tiers / Support ───────────────────────────────────────────── */
+.support{background:var(--cream)}
+.support-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:3rem;align-items:start;
+}
+.support-card{
+  background:var(--white);
+  border:2px solid rgba(45,122,56,0.1);
+  border-radius:20px;padding:2rem;
+  transition:box-shadow .3s,transform .3s,border-color .3s;
+  text-align:center;
+}
+.support-card:hover{
+  box-shadow:var(--shadow-lg);transform:translateY(-6px);
+  border-color:var(--green-400);
+}
+.support-card.featured{
+  border-color:var(--amber);
+  background:linear-gradient(160deg,var(--amber-light),var(--white));
+  position:relative;
+}
+.featured-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--amber);color:var(--white);
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:.25rem .9rem;border-radius:100px;white-space:nowrap;
+}
+.support-icon{font-size:2.2rem;margin-bottom:.75rem}
+.support-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;color:var(--green-900);
+  margin-bottom:.25rem;
+}
+.support-amount{
+  font-size:1.8rem;font-weight:800;color:var(--green-700);
+  font-family:'Playfair Display',serif;
+  margin:.75rem 0;
+}
+.support-card.featured .support-amount{color:var(--earth)}
+.support-desc{font-size:.88rem;color:var(--text-mid);line-height:1.6;margin-bottom:1.5rem}
+.support-perks{
+  text-align:left;margin-bottom:1.8rem;
+}
+.perk{
+  display:flex;align-items:flex-start;gap:.5rem;
+  font-size:.85rem;color:var(--text-mid);
+  padding:.35rem 0;border-bottom:1px solid var(--green-50);
+}
+.perk:last-child{border-bottom:none}
+.perk-check{color:var(--green-600);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ── Donate section ────────────────────────────────────────────── */
+.donate{
+  background:linear-gradient(135deg,var(--green-900),var(--green-800));
+  color:var(--white);text-align:center;
+  position:relative;overflow:hidden;
+}
+.donate::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234caf50' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.donate .section-label{color:var(--green-200)}
+.donate .section-title{color:var(--white)}
+.donate-sub{
+  font-size:1.05rem;color:rgba(255,255,255,0.75);
+  max-width:520px;margin:1rem auto 2.5rem;line-height:1.7;
+}
+.donate-buttons{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  position:relative;z-index:1;margin-bottom:2rem;
+}
+.kofi-btn{
+  display:inline-flex;align-items:center;gap:.75rem;
+  background:#ff5f5f;color:var(--white);
+  padding:.9rem 2rem;border-radius:100px;
+  font-weight:700;font-size:1rem;
+  box-shadow:0 4px 24px rgba(255,95,95,0.4);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;
+}
+.kofi-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,95,95,0.5)}
+.kofi-icon{font-size:1.3rem}
+.donate-note{
+  font-size:.82rem;color:rgba(255,255,255,0.45);
+  position:relative;z-index:1;
+}
+
+/* ── Ways to help ──────────────────────────────────────────────── */
+.help{background:var(--white)}
+.help-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;margin-top:3rem;
+}
+.help-card{
+  border:1px solid rgba(45,122,56,0.12);
+  border-radius:16px;padding:1.8rem;
+  display:flex;gap:1.2rem;
+  transition:box-shadow .3s,border-color .3s;
+}
+.help-card:hover{box-shadow:var(--shadow);border-color:var(--green-400)}
+.help-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--green-50);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+}
+.help-card h4{font-weight:700;color:var(--green-900);margin-bottom:.3rem;font-size:1rem}
+.help-card p{font-size:.88rem;color:var(--text-mid);line-height:1.6;margin-bottom:.75rem}
+.help-link{
+  font-size:.82rem;font-weight:600;color:var(--green-600);
+  display:inline-flex;align-items:center;gap:.25rem;
+}
+.help-link:hover{color:var(--green-800)}
+
+/* ── CTA Banner ────────────────────────────────────────────────── */
+.cta-banner{
+  background:linear-gradient(90deg,var(--amber),#f59e0b);
+  padding:3rem 2rem;text-align:center;
+}
+.cta-banner h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  color:var(--white);margin-bottom:.75rem;
+  font-weight:900;
+}
+.cta-banner p{color:rgba(255,255,255,0.85);margin-bottom:1.5rem;font-size:1rem}
+.cta-banner .btn-primary{background:var(--green-900)}
+.cta-banner .btn-primary:hover{background:var(--green-800)}
+
+/* ── Footer ────────────────────────────────────────────────────── */
+footer{
+  background:var(--green-900);color:rgba(255,255,255,0.7);
+  padding:3rem 2rem;text-align:center;
+}
+.footer-logo{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;font-weight:900;color:var(--white);
+  margin-bottom:.5rem;
+}
+.footer-logo span{color:var(--amber)}
+.footer-tagline{font-size:.9rem;margin-bottom:1.5rem;color:var(--green-200)}
+.footer-links{
+  display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:1.5rem;font-size:.85rem;
+}
+.footer-links a{color:rgba(255,255,255,.6);transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-note{font-size:.78rem;color:rgba(255,255,255,.35)}
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .hero-inner,.impact-grid,.founder-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .problem-grid,.solution-grid,.support-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr 1fr}
+  .how-steps::before{display:none}
+  .help-grid{grid-template-columns:1fr}
+  .impact-numbers{grid-template-columns:1fr 1fr}
+  .founder-inner{grid-template-columns:1fr;text-align:center}
+  .founder-avatar{margin:0 auto}
+  .founder-skills{justify-content:center}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .hero-actions{flex-direction:column}
+  .btn{justify-content:center}
+  .how-steps{grid-template-columns:1fr}
+  .impact-numbers{grid-template-columns:1fr}
+  .donate-buttons{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ────────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-logo">Saaf<span>Loop</span></div>
+  <div class="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#founder">About</a>
+    <a href="#support">Support</a>
+    <a href="#donate" class="nav-cta">Donate Now</a>
+  </div>
+</nav>
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-circles">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="hero-inner container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Community Campaign — India 🇮🇳
+      </div>
+      <h1>
+        India's garbage<br/>
+        crisis needs a<br/>
+        <em>community fix</em>
+      </h1>
+      <p class="hero-sub">
+        62 million tonnes of waste. Less than 20% processed.
+        Billions spent on contractors who don't deliver.
+        <strong>SaafLoop is changing that — one society at a time.</strong>
+      </p>
+      <div class="hero-actions">
+        <a href="#donate" class="btn btn-primary">☕ Support on Ko-fi</a>
+        <a href="#solution" class="btn btn-outline">See How It Works</a>
+        <a href="SaafLoop_Business_Plan.pdf" download class="btn btn-outline">📄 Download Plan</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <span>R</span><span>A</span><span>K</span><span>M</span><span>+</span>
+        </div>
+        <p class="trust-text">
+          <strong>Be one of the first supporters</strong> of this movement
+        </p>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-card-icon">♻️</div>
+          <div>
+            <h3>SaafLoop Live Dashboard</h3>
+            <p>Real-time community impact</p>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">62M</div>
+            <div class="stat-label">Tonnes of waste/year in India</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">&lt;20%</div>
+            <div class="stat-label">Actually processed today</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1.8L+</div>
+            <div class="stat-label">RWAs we can reach</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">₹35K Cr</div>
+            <div class="stat-label">Manure market opportunity</div>
+          </div>
+        </div>
+        <div class="hero-card-footer">
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Campaign Goal: ₹5 Lakhs</span>
+              <span id="pct-label">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+          </div>
+          <div class="progress-pct">Early<br/>Stage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Problem ───────────────────────────────────────────────── -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-label reveal">The Broken System</div>
+    <h2 class="section-title reveal">India's garbage crisis<br/>is <em>not an accident</em></h2>
+    <p class="section-body reveal" style="color:rgba(255,255,255,0.65)">
+      The system is designed to fail. Billions in municipal budgets disappear through
+      corrupt contractor chains while landfills overflow and citizens suffer.
+    </p>
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="problem-icon">🗑️</div>
+        <div class="problem-num">62M <span class="problem-unit">tonnes</span></div>
+        <p class="problem-desc">Of urban solid waste generated every year in India — and growing at 5% annually</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">😔</div>
+        <div class="problem-num">&lt;20% <span class="problem-unit">processed</span></div>
+        <p class="problem-desc">Of waste is scientifically treated. The rest rots in landfills, polluting air, water and soil</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">💸</div>
+        <div class="problem-num">₹10K Cr <span class="problem-unit">/year</span></div>
+        <p class="problem-desc">Spent by municipalities on waste management — much of it lost to bribery and contractor corruption</p>
+      </div>
+    </div>
+    <div class="chain-wrap reveal">
+      <div class="chain-label">The corrupt contractor chain — where your tax money disappears:</div>
+      <div class="chain">
+        <div class="chain-node">Municipal Government</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node broken">3rd Party Contractor</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node broken">Sub-Contractor</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node broken">Ground Worker</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node" style="border-color:rgba(239,68,68,.4);color:rgba(255,180,180,.9)">Garbage Piles Up</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Solution ──────────────────────────────────────────────── -->
+<section class="solution" id="solution">
+  <div class="container">
+    <div class="section-label reveal">Our Answer</div>
+    <h2 class="section-title reveal">The <em>SaafLoop</em> model —<br/>community owns the solution</h2>
+    <p class="section-body reveal">
+      Instead of waiting for government will, we give communities the tools to manage
+      their own waste — and profit from it. Inspired by the Indore model, built for every city.
+    </p>
+    <div class="solution-grid">
+      <div class="solution-card reveal">
+        <div class="solution-step">01 / Collect</div>
+        <div class="solution-icon-wrap">🏘️</div>
+        <h3>Housing Societies</h3>
+        <p>RWAs connect directly with verified local composters. No middlemen. Rated pickups. Real accountability. Weekly organic waste collection that actually happens.</p>
+      </div>
+      <div class="solution-card reveal">
+        <div class="solution-step">02 / Convert</div>
+        <div class="solution-icon-wrap">🌱</div>
+        <h3>Local Composters</h3>
+        <p>Individuals and micro-units turn organic waste into quality compost. They earn income from pickups and from selling the finished manure on our marketplace.</p>
+      </div>
+      <div class="solution-card reveal">
+        <div class="solution-step">03 / Connect</div>
+        <div class="solution-icon-wrap">🚜</div>
+        <h3>Farmers Get Manure</h3>
+        <p>Farmers buy verified organic manure directly from composters at below-market rates — cutting fertilizer costs while getting better soil inputs. Everyone wins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ──────────────────────────────────────────── -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-label reveal">The Process</div>
+    <h2 class="section-title reveal" style="text-align:center">How SaafLoop works</h2>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-step-num">1</div>
+        <h4>Society Signs Up</h4>
+        <p>Housing society commits to separating organic waste. Takes 5 minutes to register.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">2</div>
+        <h4>Matched with Composter</h4>
+        <p>We match them with a verified local composter based on location and capacity.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">3</div>
+        <h4>Weekly Pickups</h4>
+        <p>Organic waste is collected, composted, and tracked. Both sides rate each other.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">4</div>
+        <h4>Manure Sold to Farmers</h4>
+        <p>Compost is listed on the marketplace. Farmers buy direct. Revenue returns to community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Impact ─────────────────────────────────────────────────── -->
+<section class="impact" id="impact">
+  <div class="container">
+    <div class="impact-grid">
+      <div>
+        <div class="section-label reveal">Why This Matters</div>
+        <h2 class="section-title reveal">Real impact<br/>for <em>real people</em></h2>
+        <div class="impact-items">
+          <div class="impact-item reveal">
+            <div class="impact-icon">🧑‍🌾</div>
+            <div>
+              <h4>Livelihoods for Composters</h4>
+              <p>Local composters earn ₹4,000–₹15,000/month from pickups and manure sales. Real income from waste.</p>
+            </div>
+          </div>
+          <div class="impact-item reveal">
+            <div class="impact-icon">🌾</div>
+            <div>
+              <h4>Cheaper Inputs for Farmers</h4>
+              <p>Farmers access quality organic manure at 30–50% below market rates, reducing fertilizer dependency.</p>
+            </div>
+          </div>
+          <div class="impact-item reveal">
+            <div class="impact-icon">🏙️</div>
+            <div>
+              <h4>Cleaner Cities, Happier Societies</h4>
+              <p>Societies get reliable waste collection — without bribing contractors or waiting on the government.</p>
+            </div>
+          </div>
+          <div class="impact-item reveal">
+            <div class="impact-icon">🌍</div>
+            <div>
+              <h4>Less Landfill, Less Carbon</h4>
+              <p>Every tonne of organic waste composted prevents ~1.5 tonnes of CO₂ equivalent emissions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="impact-numbers reveal">
+        <div class="impact-num-card">
+          <div class="impact-big">10K</div>
+          <div class="impact-desc">Tonnes of waste diverted by Year 3</div>
+        </div>
+        <div class="impact-num-card">
+          <div class="impact-big">4K+</div>
+          <div class="impact-desc">Composter livelihoods created</div>
+        </div>
+        <div class="impact-num-card">
+          <div class="impact-big">20K</div>
+          <div class="impact-desc">Farmers accessing affordable manure</div>
+        </div>
+        <div class="impact-num-card">
+          <div class="impact-big">8K</div>
+          <div class="impact-desc">Housing societies with clean pickup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Founder ────────────────────────────────────────────────── -->
+<section class="founder" id="founder">
+  <div class="container">
+    <div class="founder-inner">
+      <div class="founder-avatar">SP</div>
+      <div>
+        <div class="founder-tag reveal">👋 The Person Behind SaafLoop</div>
+        <h3 class="reveal">Satendra Pal</h3>
+        <p class="founder-role reveal">Founder & Full-Stack Engineer · IIIT Kalyani · Lucknow, India</p>
+        <p class="founder-bio reveal">
+          I'm a software engineer who has spent years building two-sided marketplace platforms
+          in production — from salon booking apps to FMCG bulk marketplaces. I know how to
+          build what SaafLoop needs technically. What I need is a community of believers
+          to help launch the first pilot.
+          <br/><br/>
+          I grew up watching garbage pile up in my city while billions were spent on contractors
+          who delivered nothing. SaafLoop is my answer. Not a government petition. Not a protest.
+          <strong>A platform that lets communities fix this themselves.</strong>
+        </p>
+        <div class="founder-skills reveal">
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">NestJS</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Marketplace Architecture</span>
+          <span class="skill-tag">Real-time Systems</span>
+          <span class="skill-tag">Razorpay / UPI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Support tiers ─────────────────────────────────────────── -->
+<section class="support" id="support">
+  <div class="container">
+    <div class="section-label reveal">Support SaafLoop</div>
+    <h2 class="section-title reveal">Every contribution<br/><em>builds the movement</em></h2>
+    <p class="section-body reveal">
+      We are raising ₹5 Lakhs to launch our first 10 pilots. No amount is too small.
+      Every rupee goes directly to operations — zero salaries in Phase 1.
+    </p>
+    <div class="support-grid">
+      <div class="support-card reveal">
+        <div class="support-icon">🌱</div>
+        <h3>Seed Supporter</h3>
+        <div class="support-amount">₹500–₹2,000</div>
+        <p class="support-desc">You believe in the idea. Help us plant the first seed and get SaafLoop off the ground.</p>
+        <div class="support-perks">
+          <div class="perk"><span class="perk-check">✓</span> Public supporter recognition on website</div>
+          <div class="perk"><span class="perk-check">✓</span> Monthly impact update emails</div>
+          <div class="perk"><span class="perk-check">✓</span> SaafLoop founding community badge</div>
+        </div>
+        <a href="https://ko-fi.com" target="_blank" class="btn btn-outline" style="width:100%;justify-content:center">Donate on Ko-fi</a>
+      </div>
+
+      <div class="support-card featured reveal">
+        <div class="featured-badge">⭐ Most Impactful</div>
+        <div class="support-icon">♻️</div>
+        <h3>Community Champion</h3>
+        <div class="support-amount">₹5,000–₹20,000</div>
+        <p class="support-desc">Fund one society–composter pair for a full month of operations. See exactly where your money goes.</p>
+        <div class="support-perks">
+          <div class="perk"><span class="perk-check">✓</span> Everything in Seed Supporter</div>
+          <div class="perk"><span class="perk-check">✓</span> Named pilot sponsor — your name on the pilot</div>
+          <div class="perk"><span class="perk-check">✓</span> Monthly detailed impact report for your pilot</div>
+          <div class="perk"><span class="perk-check">✓</span> Founding investor certificate</div>
+          <div class="perk"><span class="perk-check">✓</span> Direct call with the founder</div>
+        </div>
+        <a href="https://ko-fi.com" target="_blank" class="btn btn-amber" style="width:100%;justify-content:center">Donate on Ko-fi</a>
+      </div>
+
+      <div class="support-card reveal">
+        <div class="support-icon">🚀</div>
+        <h3>Impact Investor</h3>
+        <div class="support-amount">₹50,000+</div>
+        <p class="support-desc">Serious about impact investing? Let's talk equity, convertible notes, or grant funding.</p>
+        <div class="support-perks">
+          <div class="perk"><span class="perk-check">✓</span> Everything in Champion</div>
+          <div class="perk"><span class="perk-check">✓</span> Equity / convertible note discussion</div>
+          <div class="perk"><span class="perk-check">✓</span> Quarterly investor update calls</div>
+          <div class="perk"><span class="perk-check">✓</span> Advisory board seat (for ₹2L+)</div>
+          <div class="perk"><span class="perk-check">✓</span> Co-branding on platform launch</div>
+        </div>
+        <a href="mailto:palsatyendra9984@gmail.com" class="btn btn-primary" style="width:100%;justify-content:center">Email to Discuss</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ko-fi donate section ──────────────────────────────────── -->
+<section class="donate" id="donate">
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section-label">Support the Mission</div>
+    <h2 class="section-title" style="margin-top:.5rem">
+      Ready to fix India's<br/>garbage problem?
+    </h2>
+    <p class="donate-sub">
+      Your support funds the first pilot. ₹5,000 keeps one society–composter
+      pair running for a full month. Let's build this together.
+    </p>
+    <div class="donate-buttons">
+      <a href="https://ko-fi.com" target="_blank" class="kofi-btn">
+        <span class="kofi-icon">☕</span>
+        Support on Ko-fi
+      </a>
+      <a href="mailto:palsatyendra9984@gmail.com?subject=SaafLoop Investment Inquiry" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;padding:.9rem 2rem">
+        📧 Discuss Investment
+      </a>
+      <a href="SaafLoop_Business_Plan.pdf" download class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;padding:.9rem 2rem">
+        📄 Download Full Plan
+      </a>
+    </div>
+    <p class="donate-note">
+      All donations via Ko-fi are transparent. Phase 1 has zero founder salary — 100% goes to operations.<br/>
+      For investment &amp; equity inquiries: palsatyendra9984@gmail.com · +91 9335828140
+    </p>
+  </div>
+</section>
+
+<!-- ── Other ways to help ─────────────────────────────────────── -->
+<section class="help" id="get-involved">
+  <div class="container">
+    <div class="section-label reveal">Not Ready to Donate?</div>
+    <h2 class="section-title reveal">There are many ways<br/>to <em>join the loop</em></h2>
+    <div class="help-grid">
+      <div class="help-card reveal">
+        <div class="help-icon">🏘️</div>
+        <div>
+          <h4>Are you in an RWA?</h4>
+          <p>Become a SaafLoop Founding Society. We'll set up your pilot for free and handle everything. Zero risk.</p>
+          <a href="mailto:palsatyendra9984@gmail.com?subject=RWA Pilot Inquiry" class="help-link">Get your society involved →</a>
+        </div>
+      </div>
+      <div class="help-card reveal">
+        <div class="help-icon">🌿</div>
+        <div>
+          <h4>Do you compost?</h4>
+          <p>Join as a Beta Composter. Get your first 5 society connections free and earn from your composting skills.</p>
+          <a href="mailto:palsatyendra9984@gmail.com?subject=Composter Signup" class="help-link">Sign up as a composter →</a>
+        </div>
+      </div>
+      <div class="help-card reveal">
+        <div class="help-icon">📣</div>
+        <div>
+          <h4>Spread the word</h4>
+          <p>Share this page on Reddit (r/india, r/bangalore, r/mumbai), LinkedIn, or Twitter. Every share matters.</p>
+          <a href="#" onclick="shareThis()" class="help-link">Share SaafLoop →</a>
+        </div>
+      </div>
+      <div class="help-card reveal">
+        <div class="help-icon">🤝</div>
+        <div>
+          <h4>Work with us</h4>
+          <p>We need community coordinators, content volunteers, and city operation leads. No salary needed — just passion.</p>
+          <a href="mailto:palsatyendra9984@gmail.com?subject=Volunteer Inquiry" class="help-link">Volunteer with SaafLoop →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Banner ─────────────────────────────────────────────── -->
+<div class="cta-banner">
+  <div class="container">
+    <h2>Indore proved it works. SaafLoop makes it possible everywhere.</h2>
+    <p>Join 7 years of proof that community waste management generates revenue, not just cleanliness.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://ko-fi.com" target="_blank" class="btn btn-primary">☕ Support on Ko-fi</a>
+      <a href="SaafLoop_Business_Plan.pdf" download class="btn" style="background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.4)">
+        📄 Read the Full Plan
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">Saaf<span>Loop</span></div>
+  <p class="footer-tagline">Saaf Sheher, Saaf Soch — Clean City, Clean Thinking.</p>
+  <div class="footer-links">
+    <a href="mailto:palsatyendra9984@gmail.com">palsatyendra9984@gmail.com</a>
+    <a href="tel:+919335828140">+91 9335828140</a>
+    <a href="https://linkedin.com/in/satendra-pal-943540209" target="_blank">LinkedIn</a>
+    <a href="https://ko-fi.com" target="_blank">Ko-fi</a>
+    <a href="SaafLoop_Business_Plan.pdf" download>Business Plan PDF</a>
+  </div>
+  <p class="footer-note">
+    © 2025 SaafLoop · Built with 💚 by Satendra Pal · India<br/>
+    This is an early-stage community fundraise. All funds usage is publicly disclosed.
+  </p>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// Animate progress bar on scroll
+const progressFill = document.getElementById('progress-fill');
+const pctLabel = document.getElementById('pct-label');
+const progressObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    setTimeout(() => {
+      // Represents early stage — set a symbolic % like 8%
+      progressFill.style.width = '8%';
+      pctLabel.textContent = 'Early Stage';
+    }, 400);
+    progressObserver.disconnect();
+  }
+}, { threshold: 0.5 });
+if (progressFill) progressObserver.observe(progressFill);
+
+// Share function
+function shareThis() {
+  const text = "SaafLoop is trying to fix India's garbage problem through community-driven composting and a waste marketplace. Check it out and support if you can! 🌱♻️";
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'SaafLoop — Fix India\'s Garbage Crisis', text, url });
+  } else {
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copied! Paste it wherever you want to share SaafLoop.');
+    });
+  }
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
